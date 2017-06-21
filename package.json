@@ -1,0 +1,26 @@
+{
+  "name": "koa-nginx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc ava test -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wedog/koa-nginx.git"
+  },
+  "author": "yong.liu <ly_wuyi@163.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wedog/koa-nginx/issues"
+  },
+  "homepage": "https://github.com/wedog/koa-nginx#readme",
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "nyc": "^11.0.2"
+  },
+  "dependencies": {
+    "http-proxy": "^1.16.2"
+  }
+}
