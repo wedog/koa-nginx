@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ava test",
+    "test": "nyc ava",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {

@@ -5,7 +5,6 @@ const path          = require("path");
 const HttpProxy     = require('http-proxy');
 const proxyServer   = HttpProxy.createProxyServer();
 const compose       = require("./compose");
-const config        = require(path.join(process.cwd(), "server/config"));
 
 class Proxy {
     constructor() {
