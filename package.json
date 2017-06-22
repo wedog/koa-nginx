@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ava test -w"
+    "test": "nyc ava test"
   },
   "repository": {
     "type": "git",
