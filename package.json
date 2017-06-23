@@ -20,9 +20,11 @@
   "devDependencies": {
     "ava": "^0.19.1",
     "coveralls": "^2.13.1",
-    "nyc": "^11.0.2"
+    "nyc": "^11.0.2",
+    "supertest": "^3.0.0"
   },
   "dependencies": {
-    "http-proxy": "^1.16.2"
+    "http-proxy": "^1.16.2",
+    "koa": "^2.3.0"
   }
 }

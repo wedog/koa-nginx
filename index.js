@@ -29,6 +29,7 @@ class Proxy {
         }
     }
     proxy(proxies){
+        let mildArr = [];
         if(proxies){
             proxies.forEach(function(proxy){
                 let pattern = new RegExp("^\/"+proxy.context+"(\/|\/\w+)?");
