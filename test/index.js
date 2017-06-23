@@ -4,6 +4,7 @@
 import test from 'ava';
 import koa from 'koa';
 import request from 'supertest';
+import bodyParser from 'koa-bodyparser';
 import proxy from '../index';
 
 test.beforeEach(t => {
@@ -35,10 +36,20 @@ test.serial('should have option host and context', async t => {
         "host": "http://127.0.0.1:3000/",
         "context": "terminal"
     }];
-    app.use(proxy.proxy(options))
+    app.use(proxy.proxy(options));
     let server = app.listen();
     const res = await request(server)
         .post('/terminal/sign')
         .send({});
     t.is(res.status, 200);
+});
+
+//todo
+test.serial('bodyParser in front of the proxy Middleware', async t=>{
+    t.pass();
+});
+
+//todo
+test.serial('behind bodyparser in proxy Middleware', async t=>{
+    t.pass();
 });
