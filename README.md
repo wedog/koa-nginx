@@ -19,6 +19,17 @@ npm install koa-nginx --save
 const koa         = require('koa');
 const bodyParser  = require('koa-bodyparser');
 const koaNginx    = require('koa-nginx');
+
+const app = new koa();
+const options = [{
+    "host": "http://127.0.0.1:3000/",
+    "context": "terminal"
+}];
+app.use(koaNginx.proxy(options));
+//the bodyParser middleware must be after koa-nginx
+app.use(bodyParser());
+let server = app.listen();
+    
 ```
 
 # License
