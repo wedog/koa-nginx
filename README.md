@@ -6,7 +6,6 @@ Reverse proxy middleware for koa. Proxy resources on other servers, such as Java
 # Installation
 First install node.js(v7.6.0 or higher). Then:
 
-
 ```
 npm install koa-nginx --save
 ```
