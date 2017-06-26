@@ -11,7 +11,6 @@ First install node.js(v7.6.0 or higher). Then:
 ```
 npm install koa-nginx --save
 ```
-
 # License
 
 
