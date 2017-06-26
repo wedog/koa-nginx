@@ -14,6 +14,7 @@ npm install koa-nginx --save
 ```
 
 # Usage
+When you request url contains terminal, it will transmit to http://127.0.0.1:3000/ !
 
 ```
 const koa         = require('koa');
