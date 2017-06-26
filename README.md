@@ -18,7 +18,7 @@ npm install koa-nginx --save
 ```
 const koa         = require('koa');
 const bodyParser  = require('koa-bodyparser');
-const koa-nginx   = require('koa-nginx');
+const koaNginx    = require('koa-nginx');
 ```
 
 # License
