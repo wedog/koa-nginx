@@ -1,4 +1,4 @@
-# koa-nginx
+``# koa-nginx
 
 [![npm version](https://badge.fury.io/js/koa-nginx.svg)](https://badge.fury.io/js/koa-nginx) [![Build Status](https://www.travis-ci.org/wedog/koa-nginx.svg?branch=master)](https://www.travis-ci.org/wedog/koa-nginx) [![Coverage Status](https://coveralls.io/repos/github/wedog/koa-nginx/badge.svg?branch=master)](https://coveralls.io/github/wedog/koa-nginx?branch=master)
 
@@ -14,7 +14,12 @@ npm install koa-nginx --save
 ```
 
 # Usage
- 
+
+```
+const koa         = require('koa');
+const bodyParser  = require('koa-bodyparser');
+const koa-nginx   = require('koa-nginx');
+```
 
 # License
 MIT License
