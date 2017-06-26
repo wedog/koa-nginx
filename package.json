@@ -20,12 +20,12 @@
   "devDependencies": {
     "ava": "^0.19.1",
     "coveralls": "^2.13.1",
+    "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "nyc": "^11.0.2",
     "supertest": "^3.0.0"
   },
   "dependencies": {
-    "http-proxy": "^1.16.2",
-    "koa": "^2.3.0"
+    "http-proxy": "^1.16.2"
   }
 }
