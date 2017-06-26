@@ -38,7 +38,7 @@ let server = app.listen();
 ```
 # API
 ### Options
-
+Most options based on [http-proxy](https://github.com/nodejitsu/node-http-proxy). 
 
 # License
 MIT License
