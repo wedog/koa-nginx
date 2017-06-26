@@ -39,6 +39,8 @@ let server = app.listen();
 # API
 ### Options
 Most options based on [http-proxy](https://github.com/nodejitsu/node-http-proxy). 
+* host: the end point server
+* context: the request url contains the 'context' will be proxy
 
 # License
 MIT License
