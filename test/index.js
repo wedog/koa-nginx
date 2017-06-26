@@ -62,18 +62,3 @@ test.serial('behind bodyparser in proxy Middleware', async t=>{
     t.is(res.status, 200);
     t.is(res.body.paramB, 2);
 });
-
-test.serial('bodyParser in front of the proxy Middleware', async t=>{
-    const app = new koa();
-    //app.use(bodyParser());
-    const options = [{
-        "host": "http://127.0.0.1:3000/",
-        "context": "terminal"
-    }];
-    app.use(proxy.proxy(options));
-    let server = app.listen();
-    const res = await request(server)
-        .post('/terminal/sign')
-        .send({});
-    t.fail("error")
-});
