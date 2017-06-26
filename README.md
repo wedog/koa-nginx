@@ -4,6 +4,10 @@
 
 Middleware for [koa2](https://github.com/koajs/koa). Reverse proxy middleware for koa. Proxy resources on other servers, such as Java services, and other node.js applications. Based on http-proxy library.
 
+# Require
+
+node v7.x +
+
 # Installation
 
 First install node.js(v7.6.0 or higher). Then:
