@@ -11,7 +11,10 @@ test.beforeEach(t => {
     const app = new koa();
     app.use(bodyParser());
     app.use(async(ctx, next) => {
-        if(ctx.url == "/sign"){
+        if(ctx.url == "/terminal/sign"){
+            ctx.status = 200;
+            ctx.body = ctx.request.body;
+        }else if(ctx.url == "/sign"){
             ctx.status = 200;
             ctx.body = ctx.request.body;
         }
