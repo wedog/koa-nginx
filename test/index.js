@@ -17,9 +17,13 @@ test.beforeEach(t => {
         }else if(ctx.url == "/sign"){
             ctx.status = 200;
             ctx.body = ctx.request.body;
+        }else if(ctx.url == "/terminal/timeOut"){
+            //ctx.status = 504;
+            //ctx.body = ctx.request.body;
+            //throw new Error();
         }
     });
-    t.context.app = app.listen(3000);
+    t.context.app = app.listen(4000);
 });
 
 test.afterEach(t => {
@@ -36,7 +40,7 @@ test.serial('there should be a terminal server', async t => {
 test.serial('should have option host and context', async t => {
     const app = new koa();
     const options = [{
-        "host": "http://127.0.0.1:3000/",
+        "host": "http://127.0.0.1:4000/",
         "context": "terminal"
     }];
     app.use(proxy.proxy(options));
@@ -50,7 +54,7 @@ test.serial('should have option host and context', async t => {
 test.serial('behind bodyparser in proxy Middleware', async t=>{
     const app = new koa();
     const options = [{
-        "host": "http://127.0.0.1:3000/",
+        "host": "http://127.0.0.1:4000/",
         "context": "terminal"
     }];
     app.use(proxy.proxy(options));
@@ -64,4 +68,27 @@ test.serial('behind bodyparser in proxy Middleware', async t=>{
         });
     t.is(res.status, 200);
     t.is(res.body.paramB, 2);
+});
+
+test.serial('error handling', async t => {
+    const app = new koa();
+    app.use(async (ctx, next) => {
+        try {
+            await next();
+        } catch (err) {
+            console.log("++++++++++++++++++"+ err);
+            err.status = err.statusCode || err.status || 500;
+            throw err;
+        }
+    });
+    const options = [{
+        "host": "http://127.0.0.1:4001/",
+        "context": "terminal"
+    }];
+    app.use(proxy.proxy(options));
+    let server = app.listen();
+    const res = await request(server)
+        .post('/terminal/timeOut')
+        .send({});
+    t.is(res.status, 500);
 });

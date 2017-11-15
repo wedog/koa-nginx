@@ -24,7 +24,10 @@ class Proxy {
                 if (typeof rewrite === 'function') {
                     ctx.req.url = rewrite(ctx.url);
                 }
-                proxyServer.web(ctx.req, ctx.res, options)
+                proxyServer.web(ctx.req, ctx.res, options);
+                proxyServer.on('error', function(e) {
+                    reject(e);
+                });
             })
         }
     }
