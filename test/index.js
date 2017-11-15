@@ -76,7 +76,6 @@ test.serial('error handling', async t => {
         try {
             await next();
         } catch (err) {
-            console.log("++++++++++++++++++"+ err);
             err.status = err.statusCode || err.status || 500;
             throw err;
         }
