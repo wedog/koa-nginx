@@ -17,6 +17,9 @@ test.beforeEach(t => {
         }else if(ctx.url == "/sign"){
             ctx.status = 200;
             ctx.body = ctx.request.body;
+        }else if(ctx.url == "/other/sign"){
+            ctx.status = 200;
+            ctx.body = ctx.request.body;
         }else if(ctx.url == "/terminal/timeOut"){
             //ctx.status = 504;
             //ctx.body = ctx.request.body;
@@ -90,4 +93,19 @@ test.serial('error handling', async t => {
         .post('/terminal/timeOut')
         .send({});
     t.is(res.status, 500);
+});
+
+test.serial('rewrite test', async t => {
+    const app = new koa();
+    const options = [{
+        "host": "http://127.0.0.1:4000/",
+        "context": "terminal",
+        rewrite: path => path.replace('terminal', 'other')
+    }];
+    app.use(proxy.proxy(options));
+    let server = app.listen();
+    const res = await request(server)
+        .post('/terminal/sign')
+        .send({});
+    t.is(res.status, 200);
 });
