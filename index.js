@@ -42,7 +42,7 @@ class Proxy {
                         target: proxy.host,
                         changeOrigin: true,
                         xfwd: true,
-                        rewrite: proxy.rewrite?path => path.replace(pattern, ''):"",
+                        rewrite: proxy.rewrite?proxy.rewrite: path => path.replace(pattern, ''),
                         logs: true
                     }
                 ));
