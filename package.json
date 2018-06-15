@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ava",
+    "test": "jest",
+    "lint": "eslint --ext .js ./ --fix",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -20,10 +21,16 @@
   "devDependencies": {
     "ava": "^0.19.1",
     "coveralls": "^2.13.1",
-    "koa": "^2.3.0",
-    "koa-bodyparser": "^4.2.0",
+    "eslint-config-egg": "^7.0.0",
+    "jest": "^23.1.0",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-compose": "^4.1.0",
+    "moment": "^2.22.2",
     "nyc": "^11.0.2",
-    "supertest": "^3.0.0"
+    "querystring": "^0.2.0",
+    "supertest": "^3.1.0",
+    "winston": "^2.4.3"
   },
   "dependencies": {
     "http-proxy": "^1.16.2"
