@@ -126,9 +126,7 @@ describe('koa-ngnix in bodyparser Middleware test', () => {
           }
         });
     });
-    console.log(res.modal_file);
     expect(res);
-    // expect(res.body.data.test).toBe('333');
     done();
   });
 
