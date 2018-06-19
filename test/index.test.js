@@ -2,6 +2,7 @@ const Proxy = require('../');
 const request = require('supertest');
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
+const path = require('path');
 const beforeAll = global.beforeAll;
 const afterAll = global.afterAll;
 const expect = global.expect;
@@ -21,6 +22,7 @@ beforeAll(() => {
     } else if (ctx.method === 'POST') {
       switch (ctx.url) {
         case '/bodyParse': res = ctx.request.body; break;
+        case '/upload': res = 'success'; break;
         case '/other/entry': res = ctx.request.body; break;
         default: break;
       }
@@ -110,6 +112,23 @@ describe('koa-ngnix in bodyparser Middleware test', () => {
         test: 1111,
       });
     expect(res.body.data.test).toBe(1111);
+    done();
+  });
+
+  test('upload test', async done => {
+    const res = await new Promise(resolve => {
+      agent.post('/ngnix/upload')
+        .field('name', 'testImg')
+        .attach('avatar', path.join(__dirname, '../static/test.png'))
+        .end((err, result) => {
+          if (!err) {
+            resolve(result);
+          }
+        });
+    });
+    console.log(res.modal_file);
+    expect(res);
+    // expect(res.body.data.test).toBe('333');
     done();
   });
 
