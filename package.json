@@ -5,8 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint --ext .js ./ --fix",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "lint": "eslint --ext .js ./ --fix"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "node verify_commit_msg.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -19,7 +28,6 @@
   },
   "homepage": "https://github.com/wedog/koa-nginx#readme",
   "devDependencies": {
-    "ava": "^0.19.1",
     "coveralls": "^2.13.1",
     "eslint-config-egg": "^7.0.0",
     "jest": "^23.1.0",
@@ -27,12 +35,14 @@
     "koa-bodyparser": "^4.2.1",
     "koa-compose": "^4.1.0",
     "moment": "^2.22.2",
-    "nyc": "^11.0.2",
     "querystring": "^0.2.0",
     "supertest": "^3.1.0",
     "winston": "^2.4.3"
   },
   "dependencies": {
-    "http-proxy": "^1.16.2"
+    "chalk": "^2.4.1",
+    "http-proxy": "^1.16.2",
+    "lint-staged": "^7.2.0",
+    "yorkie": "^1.0.3"
   }
 }
