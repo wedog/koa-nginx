@@ -33,7 +33,9 @@
   "homepage": "https://github.com/wedog/koa-nginx#readme",
   "devDependencies": {
     "coveralls": "^2.13.1",
+    "eslint": "^4.19.1",
     "eslint-config-egg": "^7.0.0",
+    "eslint-friendly-formatter": "^4.0.1",
     "jest": "^23.1.0",
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.1",
@@ -45,7 +47,6 @@
   },
   "dependencies": {
     "chalk": "^2.4.1",
-    "eslint-friendly-formatter": "^4.0.1",
     "http-proxy": "^1.16.2",
     "lint-staged": "^7.2.0",
     "yorkie": "^1.0.3"
