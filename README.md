@@ -38,7 +38,7 @@ app.listen(3000);
 # API
 ### Options
 - `logLevel`
-logging level。unrequired，String，default 'info'。
+logging level。unrequired，String，default 'info'.
 logging levels are prioritized from 0 to 5 (highest to lowest):
 
 logLevel | level |
