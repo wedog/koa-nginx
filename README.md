@@ -12,35 +12,100 @@ node v7.x +
 
 First install node.js(v7.6.0 or higher). Then:
 
-```
-npm install koa-nginx --save
-
+```bash
+$ npm i koa-ngnix --save
 ```
 
 # Usage
 When you request url contains terminal, it will transmit to http://127.0.0.1:3000/ !
 
 ```
-const koa         = require('koa');
-const bodyParser  = require('koa-bodyparser');
-const koaNginx    = require('koa-nginx');
-
-const app = new koa();
-const options = [{
-    "host": "http://127.0.0.1:3000/",
-    "context": "terminal"
-}];
-app.use(koaNginx.proxy(options));
-//the bodyParser middleware must be after koa-nginx
-app.use(bodyParser());
-let server = app.listen();
+const Koa = require('koa');
+const Proxy = require('koa-ngnix');
+const app = new Koa();
+const Ngnix = new Proxy({
+  proxies: [
+    {
+      host: 'http://localhost:3333/',
+      context: 'ngnix'
+    },
+  ]
+});
+app.use(Ngnix);
+app.listen(3000);
     
 ```
 # API
 ### Options
+- `logLevel`
+logging level。unrequired，String，default 'info'.
+logging levels are prioritized from 0 to 5 (highest to lowest):
+
+logLevel | level |
+:--------:|:-----:|
+error | 0 
+warn | 1 
+info | 2
+verbose | 3 
+debug  | 4 
+silly  | 5
+
+- `proxyTimeout`
+timeout for outgoing proxy requests.unrequired,the values are in millisecond,Number,default 30000
+
+- `rewrite`
+rewrites the url redirects.unrequired,Funtion, default `path.replace(context, '')`
+
+- `handleReq`
+This event is emitted before the data is sent. It gives you a chance to alter the proxyReq request object. Applies to "web",include `proxyReq`,`req`,`res`,`options`,`log`
+```js
+const Ngnix = new Proxy({
+  proxies: ...,
+  handleReq: proxyObj => {
+    // log is same with logLevel
+    { proxyReq, req, res, options, log } = proxyObj;
+  }
+});
+```
+
+- `handleRes`
+This event is emitted if the request to the target got a response,include `proxyRes`,`req`,`res`,`log`
+
+- `error`
+The error event is emitted if the request to the target fail,include `err`,`req`,`res`
+
+- `proxies`
+koa-ngnix important parameter,required,expect get array,Each of the internal objects is a proxy combination, and some of the internal parameters can override globally parameters of the same name.
+  * `target` url string to be parsed with the url module
+  * `context` Local proxy root address,required,string format
+  * `logs` unrequired，Boolean, default true
+  * `rewrite` unrequired，Function
+  * `proxyTimeout` unrequired，Number
+
 Most options based on [http-proxy](https://github.com/nodejitsu/node-http-proxy). 
 * host: the end point server
 * context: the request url contains the 'context' will be proxy
+
+```js
+const Ngnix = new Proxy({
+  proxies: [
+    {
+      target: 'http://127.0.0.1:3000',
+      context: 'api',
+      logs: false,
+      rewrite: path => path.rewrite('api', 'rewriteApi'),
+      proxyTimeout: 10000,
+    },
+    {
+      ...
+    },
+  ],
+  proxyTimeout: 5000,
+  logLevel: 'debug',
+  ...
+});
+app.use(Ngnix);
+```
 
 # License
 MIT License
