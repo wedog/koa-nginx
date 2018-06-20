@@ -1,0 +1,29 @@
+cache:
+  untracked: true
+  key: "$CI_BUILD_REF_NAME"
+  paths:
+    - node_modules/
+
+before_script:
+  - VERSION=`npm run packageVersion | awk 'END{print}'`
+  - echo "name = ${CI_PROJECT_NAME}, version = ${VERSION}"
+
+stages:
+  - test
+  - publish
+
+test:
+  stage: test
+  script:
+    - npm install
+    - npm run test
+  only:
+    - develop
+    - master
+
+publish:
+  stage: publish
+  script:
+    - npm publish
+  only:
+    - master
