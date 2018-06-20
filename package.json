@@ -8,9 +8,6 @@
     "lint": "eslint --format node_modules/eslint-friendly-formatter .",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
-  "publishConfig": {
-    "registry": "http://nexus3.nx-code.com/repository/npm-release/"
-  },
   "gitHooks": {
     "pre-commit": "lint-staged",
     "commit-msg": "node verify_commit_msg.js"
