@@ -1,59 +1,72 @@
 /**
  * Created by ly_wu on 2017/6/21.
  */
-const path          = require("path");
-const HttpProxy     = require('http-proxy');
-const proxyServer   = HttpProxy.createProxyServer();
-const compose       = require("./compose");
+const HttpProxy = require('http-proxy');
+const proxyServer = HttpProxy.createProxyServer();
+const compose = require('koa-compose');
+const baseProxy = require('./utils/baseProxy');
 
-class Proxy {
-    constructor() {
+class Proxy extends baseProxy {
+  constructor(...arg) {
+    super(...arg);
+    return this.proxy();
+  }
+  nginx(context, options) {
+    return (ctx, next) => {
+      if (!ctx.url.startsWith(context)) {
+        return next();
+      }
+      const { logs, rewrite, target } = options;
 
-    }
-    static nginx (context, options){
-        return (ctx, next) => {
-            if (!ctx.url.startsWith(context)){
-                return next();
-            }
-            const { logs, rewrite } = options;
-            options.headers = ctx.request.headers;
-            return new Promise((resolve, reject) => {
-                if (logs){
-                    console.log('%s - proxy - %s %s', new Date().toISOString(), ctx.req.method, ctx.req.url);
-                }
-                if (typeof rewrite === 'function') {
-                    ctx.req.url = rewrite(ctx.url);
-                }
-                try{
-                    proxyServer.web(ctx.req, ctx.res, options);
-                }catch (e){
-                    reject(e);
-                }
-                proxyServer.on('error', function(e) {
-                    reject(e);
-                });
-            })
+      ctx.req.body = ctx.request.body || null;
+      options.headers = ctx.request.headers;
+      return new Promise(resolve => {
+        if (typeof rewrite === 'function') {
+          ctx.req.url = rewrite(ctx.url);
         }
-    }
-    proxy(proxies){
-        let mildArr = [];
-        if(proxies){
-            proxies.forEach(function(proxy){
-                let pattern = new RegExp("^\/"+proxy.context+"(\/|\/\w+)?");
-                mildArr.push(Proxy.nginx(
-                    "/" + proxy.context,
-                    {
-                        target: proxy.host,
-                        changeOrigin: true,
-                        xfwd: true,
-                        rewrite: proxy.rewrite?proxy.rewrite: path => path.replace(pattern, ''),
-                        logs: true
-                    }
-                ));
-            })
+        if (logs) {
+          this.options.log.info(
+            target,
+            '- proxy -',
+            ctx.req.method,
+            ctx.req.url
+          );
         }
-        return compose(mildArr);
-    }
+        proxyServer.web(ctx.req, ctx.res, options, e => {
+          const status = {
+            ECONNREFUSED: 503,
+            ETIMEOUT: 504,
+          }[ e.code ];
+          if (status) ctx.status = status;
+          if (this.options.handleError) {
+            this.options.handleError.call(null, { e, req: ctx.req, res: ctx.res, log: this.options.log });
+          }
+          if (logs) {
+            this.options.log.error('- proxy -', ctx.status, ctx.req.method, ctx.req.url);
+          }
+          resolve();
+        });
+      });
+    };
+  }
+  proxy() {
+    const mildArr = [];
+    const { proxies, rewrite, proxyTimeout } = this.options;
+    this.handle(proxyServer);
+    proxies.forEach(proxy => {
+      const pattern = new RegExp('^/' + proxy.context + '(/|/w+)?');
+      mildArr.push(
+        this.nginx('/' + proxy.context, {
+          target: proxy.host,
+          changeOrigin: true,
+          xfwd: true,
+          rewrite: proxy.rewrite || rewrite(pattern),
+          logs: proxy.log || true,
+          proxyTimeout: proxy.proxyTimeout || proxyTimeout,
+        })
+      );
+    });
+    return compose(mildArr);
+  }
 }
-
-module.exports = new Proxy;
+module.exports = Proxy;
