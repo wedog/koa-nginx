@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run lint --fix && jest",
     "lint": "eslint --format node_modules/eslint-friendly-formatter .",
-    "packageVersion": "echo $npm_package_version"
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "publishConfig": {
     "registry": "http://nexus3.nx-code.com/repository/npm-release/"
@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/wedog/koa-nginx#readme",
   "devDependencies": {
+    "nyc": "^11.0.2",
     "coveralls": "^2.13.1",
     "eslint": "^4.19.1",
     "eslint-config-egg": "^7.0.0",
@@ -43,12 +44,12 @@
     "moment": "^2.22.2",
     "querystring": "^0.2.0",
     "supertest": "^3.1.0",
-    "winston": "^2.4.3"
+    "winston": "^2.4.3",
+    "lint-staged": "^7.2.0",
+    "chalk": "^2.4.1",
+    "yorkie": "^1.0.3"
   },
   "dependencies": {
-    "chalk": "^2.4.1",
-    "http-proxy": "^1.16.2",
-    "lint-staged": "^7.2.0",
-    "yorkie": "^1.0.3"
+    "http-proxy": "^1.16.2"
   }
 }

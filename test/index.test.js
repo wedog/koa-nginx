@@ -119,7 +119,7 @@ describe('koa-ngnix in bodyparser Middleware test', () => {
     const res = await new Promise(resolve => {
       agent.post('/ngnix/upload')
         .field('name', 'testImg')
-        .attach('avatar', path.join(__dirname, '../static/test.png'))
+        .attach('avatar', path.join(__dirname, './static/test.png'))
         .end((err, result) => {
           if (!err) {
             resolve(result);
