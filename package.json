@@ -41,15 +41,15 @@
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.1",
     "koa-compose": "^4.1.0",
-    "moment": "^2.22.2",
     "querystring": "^0.2.0",
     "supertest": "^3.1.0",
-    "winston": "^2.4.3",
     "lint-staged": "^7.2.0",
     "chalk": "^2.4.1",
     "yorkie": "^1.0.3"
   },
   "dependencies": {
-    "http-proxy": "^1.16.2"
+    "http-proxy": "^1.16.2",
+    "winston": "^2.4.3",
+    "moment": "^2.22.2"
   }
 }
