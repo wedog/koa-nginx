@@ -21,9 +21,9 @@ When you request url contains terminal, it will transmit to http://127.0.0.1:300
 
 ```
 const Koa = require('koa');
-const Proxy = require('koa-ngnix');
+const Proxy = require('koa-nginx');
 const app = new Koa();
-const Ngnix = new Proxy({
+const Ngnix = Proxy.proxy({
   proxies: [
     {
       host: 'http://localhost:3333/',
@@ -59,7 +59,7 @@ rewrites the url redirects.unrequired,Funtion, default `path.replace(context, ''
 - `handleReq`
 This event is emitted before the data is sent. It gives you a chance to alter the proxyReq request object. Applies to "web",include `proxyReq`,`req`,`res`,`options`,`log`
 ```js
-const Ngnix = new Proxy({
+const Ngnix = Proxy.proxy({
   proxies: ...,
   handleReq: proxyObj => {
     // log is same with logLevel
@@ -87,7 +87,7 @@ Most options based on [http-proxy](https://github.com/nodejitsu/node-http-proxy)
 * context: the request url contains the 'context' will be proxy
 
 ```js
-const Ngnix = new Proxy({
+const Ngnix = Proxy.proxy({
   proxies: [
     {
       target: 'http://127.0.0.1:3000',

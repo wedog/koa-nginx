@@ -4,7 +4,7 @@ const log = require('./logger');
 
 class baseProxy {
   // check params
-  constructor(option) {
+  checkOut(option) {
     const { name } = packageInfo;
     if (!option) {
       throw Error(`${name}: missing main parameters`);
@@ -16,7 +16,7 @@ class baseProxy {
       throw Error(`${name}: the type must be Function: rewrite`);
     }
     this.options = {
-      log: log(option.logLevel || 'info'),
+      log: log(process.env.LOG_LEVEL || option.logLevel || 'info'),
       proxyTimeout: option.proxyTimeout || 30000,
       proxies: option.proxies,
       rewrite: option.rewrite ? () => option.rewrite : pattern => path => path.replace(pattern, ''),

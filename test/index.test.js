@@ -53,7 +53,7 @@ describe('koa-ngnix in bodyparser Middleware test', () => {
   let agent;
   beforeAll(() => {
     const app = new Koa();
-    const ngnix = new Proxy({
+    const ngnix = Proxy.proxy({
       proxies: [
         {
           host: 'http://localhost:3333/',

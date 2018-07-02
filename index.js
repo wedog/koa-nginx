@@ -7,10 +7,6 @@ const compose = require('koa-compose');
 const baseProxy = require('./utils/baseProxy');
 
 class Proxy extends baseProxy {
-  constructor(...arg) {
-    super(...arg);
-    return this.proxy();
-  }
   nginx(context, options) {
     return (ctx, next) => {
       if (!ctx.url.startsWith(context)) {
@@ -49,7 +45,8 @@ class Proxy extends baseProxy {
       });
     };
   }
-  proxy() {
+  proxy(options) {
+    this.checkOut(options);
     const mildArr = [];
     const { proxies, rewrite, proxyTimeout } = this.options;
     this.handle(proxyServer);
@@ -69,4 +66,4 @@ class Proxy extends baseProxy {
     return compose(mildArr);
   }
 }
-module.exports = Proxy;
+module.exports = new Proxy();
