@@ -30,12 +30,13 @@ class Proxy extends baseProxy {
         }
         proxyServer.web(ctx.req, ctx.res, options, e => {
           const status = {
+            ECONNRESET: 502,
             ECONNREFUSED: 503,
             ETIMEOUT: 504,
           }[ e.code ];
           if (status) ctx.status = status;
           if (this.options.handleError) {
-            this.options.handleError.call(null, { e, req: ctx.req, res: ctx.res, log: this.options.log });
+            this.options.handleError.call(null, { e, req: ctx.req, res: ctx.res });
           }
           if (logs) {
             this.options.log.error('- proxy -', ctx.status, ctx.req.method, ctx.req.url);

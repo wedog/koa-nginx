@@ -30,15 +30,15 @@ class baseProxy {
     const { handleReq, handleRes, handleError } = this.options;
     proxyServer.on('proxyReq', (proxyReq, req, res, options) => {
       if (handleReq) {
-        handleReq.call(null, { proxyReq, req, res, options, log: this.options.log });
+        handleReq.call(null, { proxyReq, req, res, options });
       }
       if (req.body && Object.keys(req.body).length) {
         const contentType = proxyReq.getHeader('Content-Type');
         let bodyData;
-        switch (contentType) {
-          case 'application/json': bodyData = JSON.stringify(req.body); break;
-          case 'application/x-www-form-urlencoded': bodyData = queryString.stringify(req.body); break;
-          default: break;
+        if (contentType.match(/application\/json/)) {
+          bodyData = JSON.stringify(req.body);
+        } else if (contentType.match(/application\/x-www-form-urlencoded/)) {
+          bodyData = queryString.stringify(req.body);
         }
         if (bodyData) {
           proxyReq.write(bodyData);
@@ -48,12 +48,12 @@ class baseProxy {
     });
     proxyServer.on('proxyRes', (proxyRes, req, res) => {
       if (handleRes) {
-        handleRes.call(null, { proxyRes, req, res, log: this.options.log });
+        handleRes.call(null, { proxyRes, req, res });
       }
     });
     proxyServer.on('error', (err, req, res) => {
       if (handleError) {
-        handleError.call(null, { err, req, res, log: this.options.log });
+        handleError.call(null, { err, req, res });
       }
     });
   }

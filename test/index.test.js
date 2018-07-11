@@ -69,10 +69,6 @@ describe('koa-ngnix in bodyparser Middleware test', () => {
           context: 'notFound',
         },
       ],
-      proxyReq: proxyObj => {
-        const { log } = proxyObj;
-        log.info('before the proxy connection');
-      },
       proxyRes: proxyObj => {
         const { proxyRes, req } = proxyObj;
         proxyRes.headers.token = req.headers.newtoken;
@@ -107,7 +103,7 @@ describe('koa-ngnix in bodyparser Middleware test', () => {
 
   test('POST method', async done => {
     const res = await agent.post('/ngnix/bodyParse')
-      .set('Content-Type', 'application/json')
+      .set('Content-Type', 'application/json; charset=utf-8')
       .send({
         test: 1111,
       });
