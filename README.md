@@ -13,7 +13,7 @@ node v7.x +
 First install node.js(v7.6.0 or higher). Then:
 
 ```bash
-$ npm i koa-ngnix --save
+$ npm i koa-nginx --save
 ```
 
 # Usage
