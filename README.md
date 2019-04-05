@@ -57,7 +57,7 @@ timeout for outgoing proxy requests.unrequired,the values are in millisecond,Num
 rewrites the url redirects.unrequired,Funtion, default `path.replace(context, '')`
 
 - `handleReq`
-This event is emitted before the data is sent. It gives you a chance to alter the proxyReq request object. Applies to "web",include `proxyReq`,`req`,`res`,`options`
+Unrequired.This event is emitted before the data is sent. It gives you a chance to alter the proxyReq request object. Applies to "web",include `proxyReq`,`req`,`res`,`options`
 ```js
 const Nginx = Proxy.proxy({
   proxies: ...,
@@ -68,10 +68,10 @@ const Nginx = Proxy.proxy({
 ```
 
 - `handleRes`
-This event is emitted if the request to the target got a response,include `proxyRes`,`req`,`res`
+Unrequired.This event is emitted if the request to the target got a response,include `proxyRes`,`req`,`res`
 
 - `error`
-The error event is emitted if the request to the target fail,include `err`,`req`,`res`
+Unrequired.The error event is emitted if the request to the target fail,include `err`,`req`,`res`
 
 - `proxies`
 koa-nginx important parameter,required,expect get array,Each of the internal objects is a proxy combination, and some of the internal parameters can override globally parameters of the same name.
