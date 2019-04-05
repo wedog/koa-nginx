@@ -23,15 +23,15 @@ When you request url contains terminal, it will transmit to http://127.0.0.1:300
 const Koa = require('koa');
 const Proxy = require('koa-nginx');
 const app = new Koa();
-const Ngnix = Proxy.proxy({
+const Nginx = Proxy.proxy({
   proxies: [
     {
       host: 'http://localhost:3333/',
-      context: 'ngnix'
+      context: 'nginx'
     },
   ]
 });
-app.use(Ngnix);
+app.use(Nginx);
 app.listen(3000);
     
 ```
@@ -59,7 +59,7 @@ rewrites the url redirects.unrequired,Funtion, default `path.replace(context, ''
 - `handleReq`
 This event is emitted before the data is sent. It gives you a chance to alter the proxyReq request object. Applies to "web",include `proxyReq`,`req`,`res`,`options`
 ```js
-const Ngnix = Proxy.proxy({
+const Nginx = Proxy.proxy({
   proxies: ...,
   handleReq: proxyObj => {
     { proxyReq, req, res, options } = proxyObj;
@@ -74,7 +74,7 @@ This event is emitted if the request to the target got a response,include `proxy
 The error event is emitted if the request to the target fail,include `err`,`req`,`res`
 
 - `proxies`
-koa-ngnix important parameter,required,expect get array,Each of the internal objects is a proxy combination, and some of the internal parameters can override globally parameters of the same name.
+koa-nginx important parameter,required,expect get array,Each of the internal objects is a proxy combination, and some of the internal parameters can override globally parameters of the same name.
   * `target` url string to be parsed with the url module
   * `context` Local proxy root address,required,string format
   * `logs` unrequired，Boolean, default true
@@ -86,7 +86,7 @@ Most options based on [http-proxy](https://github.com/nodejitsu/node-http-proxy)
 * context: the request url contains the 'context' will be proxy
 
 ```js
-const Ngnix = Proxy.proxy({
+const Nginx = Proxy.proxy({
   proxies: [
     {
       target: 'http://127.0.0.1:3000',
@@ -103,7 +103,7 @@ const Ngnix = Proxy.proxy({
   logLevel: 'debug',
   ...
 });
-app.use(Ngnix);
+app.use(Nginx);
 ```
 
 # License
